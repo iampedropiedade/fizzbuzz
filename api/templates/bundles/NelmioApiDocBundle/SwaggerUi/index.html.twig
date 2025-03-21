@@ -1,0 +1,37 @@
+{% extends '@!NelmioApiDoc/SwaggerUi/index.html.twig' %}
+
+{% block meta %}
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
+{% endblock meta %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+
+{% block header_block %}
+    <header>
+        {% block header %}
+        {% endblock header %}
+    </header>
+{% endblock header_block %}
+
+{% block swagger_ui %}
+    <div id="swagger-ui" class="api-platform"></div>
+{% endblock %}
+
+{% block swagger_initialization %}
+    <script type="text/javascript">
+        (function () {
+            let swaggerUI = {
+                tagsSorter: 'alpha',
+                operationsSorter: 'method',
+                defaultModelsExpandDepth: 0,
+            };
+            window.onload = loadSwaggerUI(swaggerUI);
+        })();
+    </script>
+{% endblock swagger_initialization %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

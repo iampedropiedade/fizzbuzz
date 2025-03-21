@@ -1,0 +1,37 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: dockerfile
+      args:
+        uid: ${UID}
+    container_name: ${DOCKER_NAME}-api
+    environment:
+      - APACHE_RUN_USER=#${UID}
+      - APACHE_RUN_GROUP=#${UID}
+    volumes:
+      - ./api:/var/www/html
+      - ./docker/apache2/sites-available:/etc/apache2/sites-available:cached
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini:cached
+    ports:
+      - '8210:80'
+    networks:
+      - ${DOCKER_NAME}
+    restart: unless-stopped
+  database:
+    image: mysql:9
+    environment:
+      - MYSQL_ROOT_PASSWORD=asaZv7vf2IFPFjiEv7QMMBNo3hNqK4QoLQ1hOOf5ezNZSAXU70wDbc3tsJ9GDE2d
+      - MYSQL_DATABASE=app
+      - MYSQL_USER=app
+      - MYSQL_PASSWORD=AHPrzHXOOgDy25GH1yBJ847TsJyLnjm18NKQOXFzDTVHgeK00ve5ISs1oSKlPWj7
+    ports:
+      - '3380:3306'
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
+    container_name: ${DOCKER_NAME}-db
+    networks:
+      - ${DOCKER_NAME}
+    restart: unless-stopped
+networks:
+  appsconcept:

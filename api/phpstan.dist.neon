@@ -1,0 +1,15 @@
+parameters:
+    reportUnmatchedIgnoredErrors: false
+    treatPhpDocTypesAsCertain: false
+    level: 8
+    doctrine:
+        objectManagerLoader: tests/PhpStan/object_manager.php
+    paths:
+        - src
+        - tests
+    ignoreErrors:
+        - identifier: missingType.generics
+        - '#Property .+::\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+        - '#Method App\\Repository\\(\w+\\)*\w+Repository::(find)\w+\(\) should return ((array|iterable)<)?App\\Entity\\(\w+\\)*\w+(>)?(\|null)? but returns (object|mixed)\.#'
+        - '#Dynamic call to static method PHPUnit\\Framework\\Assert::[a-zA-Z0-9\\_]+\(\)\.#'
+        - '#Dynamic call to static method Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase::[a-zA-Z0-9\\_]+\(\)\.#'
