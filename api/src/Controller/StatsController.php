@@ -25,6 +25,10 @@ use Symfony\Component\Serializer\SerializerInterface;
             ref: new Model(type: StatsResultDto::class)
         )
     ),
+    OA\Response(
+        response: Response::HTTP_NOT_FOUND,
+        description: 'No stats found',
+    ),
 ]
 class StatsController extends AbstractApiController
 {
@@ -42,6 +46,6 @@ class StatsController extends AbstractApiController
             return new JsonResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
-        return JsonResponse::fromJsonString($this->serializer->serialize($result, 'json'));
+        return JsonResponse::fromJsonString($this->serializer->serialize($result, 'json'), $result ? Response::HTTP_OK : Response::HTTP_NOT_FOUND);
     }
 }
